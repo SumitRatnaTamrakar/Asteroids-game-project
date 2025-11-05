@@ -1,8 +1,8 @@
 import pygame
 from constants import *
 from player import Player
-
-
+from asteroid import Asteroid
+from asteroidfield import AsteroidField
 
 def main():
     print( "Starting Asteroids!")
@@ -21,13 +21,20 @@ def draw_screen():
     x = SCREEN_WIDTH / 2
     y = SCREEN_HEIGHT / 2
 
-
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
-    
+
+    asteroids = pygame.sprite.Group()
+
     Player.containers = (updatable, drawable)
 
+    Asteroid.containers = (asteroids, updatable, drawable)
+
+    AsteroidField.containers = (updatable)
+
     player = Player(x, y)
+
+    asteroid_field = AsteroidField()
 
     # Create a Clock object
     clock_obj = pygame.time.Clock()
@@ -40,9 +47,6 @@ def draw_screen():
     If your computer speeds up, the asteroids shouldn't also speed up. 
     Conversely, if your computer slows down, the asteroids shouldn't also slow down: they would just move less smoothly."""
     dt = 0
-
-
-    
 
     while True:
         for event in pygame.event.get():
@@ -61,8 +65,6 @@ def draw_screen():
 
         pygame.display.flip()
         dt = clock_obj.tick()/1000
-
-
 
 if __name__ == "__main__":
 
