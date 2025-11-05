@@ -2,10 +2,11 @@ import pygame
 from constants import *
 from player import Player
 
+
+
 def main():
     print( "Starting Asteroids!")
 
-    
 
 def print_screen_size():
     # print("Screen width: ", SCREEN_WIDTH)
@@ -19,6 +20,13 @@ def draw_screen():
 
     x = SCREEN_WIDTH / 2
     y = SCREEN_HEIGHT / 2
+
+
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    
+    Player.containers = (updatable, drawable)
+
     player = Player(x, y)
 
     # Create a Clock object
@@ -33,15 +41,23 @@ def draw_screen():
     Conversely, if your computer slows down, the asteroids shouldn't also slow down: they would just move less smoothly."""
     dt = 0
 
+
+    
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
         screen.fill(FILL_COLOR_BLACK)
         
-        player.draw(screen)
+        # player.draw(screen)
 
-        player.update(dt)
+        # player.update(dt)
+
+        for drawable_element in drawable:
+            drawable_element.draw(screen)
+        
+        updatable.update(dt)
 
         pygame.display.flip()
         dt = clock_obj.tick()/1000
